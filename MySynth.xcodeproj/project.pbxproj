@@ -12,7 +12,23 @@
 		5291F0141F18DF3C0069DF1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5291F0121F18DF3C0069DF1D /* Main.storyboard */; };
 		5291F0161F18DF3C0069DF1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5291F0151F18DF3C0069DF1D /* Assets.xcassets */; };
 		5291F0191F18DF3C0069DF1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5291F0171F18DF3C0069DF1D /* LaunchScreen.storyboard */; };
+		5291F0211F18E4420069DF1D /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5291F0201F18E4420069DF1D /* AudioKit.framework */; };
+		5291F0221F18E4420069DF1D /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5291F0201F18E4420069DF1D /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5291F0231F18E4430069DF1D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5291F0221F18E4420069DF1D /* AudioKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5291F00B1F18DF3C0069DF1D /* MySynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +38,7 @@
 		5291F0151F18DF3C0069DF1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5291F0181F18DF3C0069DF1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5291F01A1F18DF3C0069DF1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5291F0201F18E4420069DF1D /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5291F0211F18E4420069DF1D /* AudioKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +56,7 @@
 		5291F0021F18DF3C0069DF1D = {
 			isa = PBXGroup;
 			children = (
+				5291F0201F18E4420069DF1D /* AudioKit.framework */,
 				5291F00D1F18DF3C0069DF1D /* MySynth */,
 				5291F00C1F18DF3C0069DF1D /* Products */,
 			);
@@ -74,6 +93,7 @@
 				5291F0071F18DF3C0069DF1D /* Sources */,
 				5291F0081F18DF3C0069DF1D /* Frameworks */,
 				5291F0091F18DF3C0069DF1D /* Resources */,
+				5291F0231F18E4430069DF1D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,7 +116,7 @@
 				TargetAttributes = {
 					5291F00A1F18DF3C0069DF1D = {
 						CreatedOnToolsVersion = 8.3.3;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -262,10 +282,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MySynth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.testCompany.MySynth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -274,10 +300,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MySynth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.testCompany.MySynth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
