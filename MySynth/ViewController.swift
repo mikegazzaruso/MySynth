@@ -2,15 +2,16 @@
 //  ViewController.swift
 //  MySynth
 //
-//  Created by Mike Gazzaruso on 14/07/17.
+//  Created by Mike Gazzaruso on 11/03/17.
 //  Copyright © 2017 Test Company. All rights reserved.
 //
 
 import UIKit
 import AudioKit
+import AudioKitUI
 
 class ViewController: UIViewController {
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -37,7 +38,6 @@ class ViewController: UIViewController {
         
         // Setup the Lowpass Filter with an initial Cutoff of 22000, almost no filtering
         self.filter = AKLowPassFilter(oscillator, cutoffFrequency: 22000.0, resonance: 0.2)
-        
         // Setup the ADSR Envelope and apply it to our Lowpass filter output
         self.envelope = AKAmplitudeEnvelope(self.filter, attackDuration: 0.01, decayDuration: 0.1, sustainLevel: 1.0, releaseDuration: 0.1)
         
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         AudioKit.output = self.envelope
         
         // Start AudioKit Engine
-        AudioKit.start()
+        try! AudioKit.start()
     }
     
     // Setup Graphic User Interface
@@ -62,10 +62,9 @@ class ViewController: UIViewController {
         
         // Set Attack, Decay, Sustain and Release sliders and set their constraints
         // Attack
-        let attackSlider = AKPropertySlider(
+        let attackSlider = AKSlider(
             property: "ENV Attack",
-            format: "%0.2f ms",
-            value: self.envelope.attackDuration, minimum: 0.01, maximum: 1000.0
+            value: self.envelope.attackDuration, range: 0.01 ... 1000.0, taper: 1.0, format: "%0.2f ms"
         ) { attackValue in
             self.envelope.attackDuration = attackValue / 1000
         }
@@ -75,10 +74,9 @@ class ViewController: UIViewController {
         let atkHeightContraint = NSLayoutConstraint(item: attackSlider, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.1, constant: 0)
         
         // Decay
-        let decaySlider = AKPropertySlider(
+        let decaySlider = AKSlider(
             property: "ENV Decay",
-            format: "%0.1f ms",
-            value: self.envelope.decayDuration, minimum: 0.1, maximum: 1000.0
+            value: self.envelope.decayDuration, range: 0.1 ... 1000.0, taper: 1.0, format: "%0.1f ms"
         ) { decayValue in
             self.envelope.decayDuration = decayValue / 1000
         }
@@ -89,10 +87,9 @@ class ViewController: UIViewController {
         let dcyUpperContraint = NSLayoutConstraint(item: decaySlider, attribute: .top, relatedBy: .equal, toItem: attackSlider, attribute: .bottom, multiplier: 1.0, constant: 8)
         
         // Sustain
-        let sustainSlider = AKPropertySlider(
+        let sustainSlider = AKSlider(
             property: "ENV Sustain",
-            format: "%0.1f",
-            value: self.envelope.sustainLevel, minimum: 0.0, maximum: 1.0
+            value: self.envelope.sustainLevel, range: 0.0 ... 1.0, taper: 1.0, format: "%0.1f"
         ) { sustainLevel in
             self.envelope.sustainLevel = sustainLevel
         }
@@ -103,10 +100,9 @@ class ViewController: UIViewController {
         let stnUpperContraint = NSLayoutConstraint(item: sustainSlider, attribute: .top, relatedBy: .equal, toItem: decaySlider, attribute: .bottom, multiplier: 1.0, constant: 8)
         
         // Release
-        let releaseSlider = AKPropertySlider(
+        let releaseSlider = AKSlider(
             property: "ENV Release",
-            format: "%0.1f ms",
-            value: self.envelope.releaseDuration, minimum: 0.1, maximum: 1000.0
+            value: self.envelope.releaseDuration, range: 0.1 ... 1000.0, taper: 1000.0, format: "%0.1f ms"
         ) { releaseDuration in
             self.envelope.releaseDuration = releaseDuration / 1000
         }
@@ -115,12 +111,11 @@ class ViewController: UIViewController {
         let rlsWidthConstraint = NSLayoutConstraint(item: releaseSlider, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1.0, constant: 0)
         let rlsHeightContraint = NSLayoutConstraint(item: releaseSlider, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.1, constant: 0)
         let rlsUpperContraint = NSLayoutConstraint(item: releaseSlider, attribute: .top, relatedBy: .equal, toItem: sustainSlider, attribute: .bottom, multiplier: 1.0, constant: 8)
-
+        
         // Filter Cutoff and Resonance
-        let filterSlider = AKPropertySlider(
+        let filterSlider = AKSlider(
             property: "FILTER",
-            format: "%0.f Hz",
-            value: self.filter.cutoffFrequency, minimum: 1.0, maximum: 22050.0
+            value: self.filter.cutoffFrequency, range: 1.0 ... 22050.0, taper: 1.0, format: "%0.f Hz"
         ) { filterVariation in
             self.filter.cutoffFrequency = filterVariation
             self.filter.resonance = 1.0 - (filterVariation / 22050.0)
@@ -130,7 +125,7 @@ class ViewController: UIViewController {
         let fltWidthConstraint = NSLayoutConstraint(item: filterSlider, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1.0, constant: 0)
         let fltHeightContraint = NSLayoutConstraint(item: filterSlider, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.1, constant: 0)
         let fltUpperContraint = NSLayoutConstraint(item: filterSlider, attribute: .top, relatedBy: .equal, toItem: releaseSlider, attribute: .bottom, multiplier: 1.0, constant: 8)
-
+        
         // Activate the constraints
         NSLayoutConstraint.activate([yPosConstraint, heightConstraint, widthConstraint, atkWidthConstraint, atkHeightContraint, dcyWidthConstraint, dcyHeightContraint, dcyUpperContraint, stnWidthConstraint, stnHeightContraint, stnUpperContraint, rlsWidthConstraint, rlsHeightContraint, rlsUpperContraint, fltWidthConstraint, fltHeightContraint, fltUpperContraint])
     }
